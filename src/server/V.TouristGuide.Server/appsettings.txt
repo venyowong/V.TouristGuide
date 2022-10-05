@@ -1,0 +1,64 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "Urls": "http://0.0.0.0:6941",
+  "AllowedHosts": "*",
+  "Serilog": {
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] [{TraceId}] {Message:lj}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "log/log.txt",
+          "rollingInterval": "Day",
+          "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] [{TraceId}] {Message:lj}{NewLine}{Exception}"
+        }
+      }
+    ]
+  },
+  "Jwt": {
+    "Secret": "c786e0fb7a2547788fc7fb79b67b2db8"
+  },
+  "Admin": {
+    "Password": "123456",
+    "Mail": {
+      "SmtpServer": "xxx",
+      "SmtpPort": 587,
+      "Account": "xxx",
+      "Password": "xxx"
+    }
+  },
+  "Tencent": {
+    "Sms": {
+      "SecretId": "xxx",
+      "SecretKey": "xxx",
+      "AppId": "xxx",
+      "SignName": "xxx",
+      "TemplateId": "xxx"
+    }
+  },
+  "OAuth": {
+    "Github": {
+      "client_id": "xxx",
+      "client_secret": "xxx"
+    },
+    "Gitee": {
+      "client_id": "xxx",
+      "client_secret": "xxx"
+    },
+    "Stackexchange": {
+      "client_id": "xxx",
+      "client_secret": "xxx",
+      "key": "xxx"
+    }
+  }
+}

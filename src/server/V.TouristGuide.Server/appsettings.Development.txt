@@ -1,0 +1,12 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "Postgres": {
+    "ConnectionString": "Host=127.0.0.1;Username=postgres;Password=xxx;Database=v_tourist_guide"
+  },
+  "OAuthCallbackUrl": "http://127.0.0.1/touristguide/#/user"
+}

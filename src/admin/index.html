@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>resader</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <link rel="stylesheet" href="https://unpkg.com/amis@2.1.0/sdk/sdk.css" />
+    <!-- 这是默认主题所需的，如果是其他主题则不需要 -->
+    <!-- 从 1.1.0 开始 sdk.css 将不支持 IE 11，如果要支持 IE11 请引用这个 css，并把前面那个删了 -->
+    <!-- <link rel="stylesheet" href="sdk-ie11.css" /> -->
+    <!-- 不过 amis 开发团队几乎没测试过 IE 11 下的效果，所以可能有细节功能用不了，如果发现请报 issue -->
+    <style>
+      html,
+      body,
+      .app-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" class="app-wrapper"></div>
+
+    <script src="./js/common.js"></script>
+    <script src="https://unpkg.com/amis@2.1.0/sdk/sdk.js"></script>
+    <script type="text/javascript">
+      let token = localStorage.token;
+      if (!token) {
+        window.location.href = "./login.html";
+      }
+
+      (function () {
+        let amis = amisRequire('amis/embed');
+        let amisJSON = {
+          type: 'page',
+          body: [
+          {
+            type: "tabs",
+            tabsMode: "vertical",
+            tabs: [
+              {
+                title: "place 管理",
+                body: [
+                  {
+                    label: "新增",
+                    type: "button",
+                    actionType: "dialog",
+                    level: "primary",
+                    className: "m-b-sm",
+                    dialog: {
+                      title: "新增 place",
+                      body: {
+                        type: "form",
+                        api: `post:${base_url}/place/admin/add`,
+                        data: {
+                          name: "${name}",
+                          cover: "${cover}",
+                          openTime: "${openTime}",
+                          address: "${address}",
+                          tel: "${tel}",
+                          type: "${type}",
+                          token: token
+                        },
+                        body: [
+                          {
+                            type: "input-text",
+                            name: "name",
+                            label: "名称",
+                            required: true
+                          },
+                          {
+                            type: "input-file",
+                            name: "cover",
+                            label: "封面",
+                            accept: "*",
+                            receiver: `${base_url}/admin/file/upload?token=${token}`
+                          },
+                          {
+                            type: "input-text",
+                            name: "openTime",
+                            label: "开放时间"
+                          },
+                          {
+                            type: "location-picker",
+                            name: "address",
+                            ak: "dueIvblr99AhtOFMaQvF7Z5xHmc3aXUq",
+                            label: "地址",
+                            required: true
+                          },
+                          {
+                            type: "input-text",
+                            name: "tel",
+                            label: "电话"
+                          },
+                          {
+                            name: "type",
+                            type: "select",
+                            label: "类型",
+                            options: [
+                              {
+                                label: "美食",
+                                value: 0
+                              },
+                              {
+                                label: "景点",
+                                value: 1
+                              }
+                            ],
+                            required: true
+                          },
+                          {
+                            name: "visibility",
+                            type: "input-text",
+                            label: "能见度"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    type: "crud",
+                    api: `${base_url}/place/list`,
+                    syncLocation: false,
+                    columns: [
+                      {
+                        name: "id",
+                        label: "id",
+                        sortable: true
+                      },
+                      {
+                        name: "name",
+                        label: "名称",
+                        sortable: true
+                      },
+                      {
+                        name: "cover",
+                        type: "image",
+                        label: "封面"
+                      },
+                      {
+                        name: "openTime",
+                        label: "开放时间"
+                      },
+                      {
+                        name: "address",
+                        label: "地址"
+                      },
+                      {
+                        name: "lng",
+                        label: "经度"
+                      },
+                      {
+                        name: "lat",
+                        label: "纬度"
+                      },
+                      {
+                        name: "tel",
+                        label: "电话"
+                      },
+                      {
+                        name: "type",
+                        label: "类型",
+                        type: "select",
+                        options: [
+                          {
+                            label: "美食",
+                            value: 0
+                          },
+                          {
+                            label: "景点",
+                            value: 1
+                          }
+                        ],
+                        sortable: true
+                      },
+                      {
+                        name: "visibility",
+                        type: "input-text",
+                        label: "能见度"
+                      },
+                      {
+                        type: "operation",
+                        label: "操作",
+                        buttons: [
+                          {
+                            label: "修改",
+                            type: "button",
+                            actionType: "drawer",
+                            drawer: {
+                              title: "修改 place",
+                              body: {
+                                type: "form",
+                                api: `post:${base_url}/place/admin/update` + '?id=${id}',
+                                body: [
+                                  {
+                                    type: "input-text",
+                                    name: "name",
+                                    label: "名称"
+                                  },
+                                  {
+                                    type: "input-file",
+                                    name: "cover",
+                                    label: "封面",
+                                    accept: "*",
+                                    receiver: `${base_url}/admin/file/upload?token=${token}`
+                                  },
+                                  {
+                                    type: "input-text",
+                                    name: "openTime",
+                                    label: "开放时间"
+                                  },
+                                  {
+                                    type: "input-text",
+                                    name: "tel",
+                                    label: "电话"
+                                  },
+                                  {
+                                    name: "type",
+                                    label: "类型",
+                                    type: "select",
+                                    options: [
+                                      {
+                                        label: "美食",
+                                        value: 0
+                                      },
+                                      {
+                                        label: "景点",
+                                        value: 1
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    name: "visibility",
+                                    type: "input-text",
+                                    label: "能见度"
+                                  },
+                                  {
+                                    name: "token",
+                                    type: "input-text",
+                                    value: token,
+                                    visible: false
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            label: "删除",
+                            type: "button",
+                            actionType: "ajax",
+                            level: "danger",
+                            confirmText: "是否确认删除该记录？",
+                            api: {
+                              method: "POST",
+                              url: `${base_url}/place/admin/delete` + '?id=${id}',
+                              headers: {
+                                token: token
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                title: "place_addition 管理",
+                body: [
+                  {
+                    label: "新增",
+                    type: "button",
+                    actionType: "dialog",
+                    level: "primary",
+                    className: "m-b-sm",
+                    dialog: {
+                      title: "新增 place_addition",
+                      body: {
+                        type: "form",
+                        api: `post:${base_url}/place/addition/admin/add`,
+                        data: {
+                          placeId: "${placeId}",
+                          type: "${type}",
+                          title: "${title}",
+                          img: "${img}",
+                          url: "${url}",
+                          desc: "${desc}",
+                          source: "${source}",
+                          sourceUrl: "${sourceUrl}",
+                          token: token
+                        },
+                        body: [
+                          {
+                            type: "input-text",
+                            name: "placeId",
+                            label: "placeId",
+                            required: true
+                          },
+                          {
+                            name: "type",
+                            type: "select",
+                            label: "类型",
+                            options: [
+                              {
+                                label: "图片",
+                                value: "pic"
+                              },
+                              {
+                                label: "文章",
+                                value: "article"
+                              },
+                              {
+                                label: "视频",
+                                value: "video"
+                              },
+                              {
+                                label: "评论",
+                                value: "comment"
+                              }
+                            ],
+                            required: true
+                          },
+                          {
+                            type: "input-text",
+                            name: "title",
+                            label: "标题"
+                          },
+                          {
+                            type: "input-file",
+                            name: "img",
+                            label: "封面",
+                            accept: "*",
+                            receiver: `${base_url}/admin/file/upload?token=${token}`
+                          },
+                          {
+                            type: "input-text",
+                            name: "url",
+                            label: "跳转链接"
+                          },
+                          {
+                            type: "textarea",
+                            name: "desc",
+                            label: "描述"
+                          },
+                          {
+                            type: "input-text",
+                            name: "source",
+                            label: "素材来源"
+                          },
+                          {
+                            name: "sourceUrl",
+                            type: "input-text",
+                            label: "素材链接"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    type: "crud",
+                    api: `${base_url}/place/addition/list`,
+                    syncLocation: false,
+                    columns: [
+                      {
+                        name: "id",
+                        label: "id",
+                        sortable: true
+                      },
+                      {
+                        name: "placeId",
+                        label: "placeId",
+                        sortable: true
+                      },
+                      {
+                        name: "type",
+                        label: "类型",
+                        type: "select",
+                        options: [
+                          {
+                            label: "图片",
+                            value: "pic"
+                          },
+                          {
+                            label: "文章",
+                            value: "article"
+                          },
+                          {
+                            label: "视频",
+                            value: "video"
+                          },
+                          {
+                            label: "评论",
+                            value: "comment"
+                          }
+                        ],
+                        sortable: true
+                      },
+                      {
+                        name: "title",
+                        label: "标题",
+                        sortable: true
+                      },
+                      {
+                        name: "img",
+                        type: "image",
+                        label: "封面"
+                      },
+                      {
+                        name: "url",
+                        label: "跳转链接"
+                      },
+                      {
+                        name: "desc",
+                        label: "描述",
+                        type: "textarea"
+                      },
+                      {
+                        name: "source",
+                        label: "素材来源"
+                      },
+                      {
+                        name: "sourceUrl",
+                        label: "素材链接"
+                      },
+                      {
+                        type: "operation",
+                        label: "操作",
+                        buttons: [
+                          {
+                            label: "修改",
+                            type: "button",
+                            actionType: "drawer",
+                            drawer: {
+                              title: "修改 place_addition",
+                              body: {
+                                type: "form",
+                                api: `post:${base_url}/place/addition/admin/update`,
+                                body: [
+                                  {
+                                    type: "input-text",
+                                    name: "placeId",
+                                    label: "placeId",
+                                    required: true
+                                  },
+                                  {
+                                    name: "type",
+                                    type: "select",
+                                    label: "类型",
+                                    options: [
+                                      {
+                                        label: "图片",
+                                        value: "pic"
+                                      },
+                                      {
+                                        label: "文章",
+                                        value: "article"
+                                      },
+                                      {
+                                        label: "视频",
+                                        value: "video"
+                                      },
+                                      {
+                                        label: "评论",
+                                        value: "comment"
+                                      }
+                                    ],
+                                    required: true
+                                  },
+                                  {
+                                    type: "input-text",
+                                    name: "title",
+                                    label: "标题"
+                                  },
+                                  {
+                                    type: "input-file",
+                                    name: "img",
+                                    label: "封面",
+                                    accept: "*",
+                                    receiver: `${base_url}/admin/file/upload?token=${token}`
+                                  },
+                                  {
+                                    type: "input-text",
+                                    name: "url",
+                                    label: "跳转链接"
+                                  },
+                                  {
+                                    type: "textarea",
+                                    name: "desc",
+                                    label: "描述"
+                                  },
+                                  {
+                                    type: "input-text",
+                                    name: "source",
+                                    label: "素材来源"
+                                  },
+                                  {
+                                    name: "sourceUrl",
+                                    type: "input-text",
+                                    label: "素材链接"
+                                  },
+                                  {
+                                    name: "token",
+                                    type: "input-text",
+                                    value: token,
+                                    visible: false
+                                  },
+                                  {
+                                    name: "id",
+                                    type: "input-text",
+                                    visible: false
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            label: "删除",
+                            type: "button",
+                            actionType: "ajax",
+                            level: "danger",
+                            confirmText: "是否确认删除该记录？",
+                            api: {
+                              method: "POST",
+                              url: `${base_url}/place/addition/admin/delete` + '?id=${id}',
+                              headers: {
+                                token: token
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+          ]
+        };
+        let amisScoped = amis.embed('#root', amisJSON);
+      })();
+    </script>
+  </body>
+</html>
