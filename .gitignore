@@ -351,4 +351,4 @@ MigrationBackup/
 
 appsettings*.json
 
-src/server/V.TouristGuide.Server/wwwroot/files/
+src/server/wwwroot/files/

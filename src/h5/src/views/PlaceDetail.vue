@@ -22,6 +22,7 @@
     <van-cell-group class="place-detail-inline-row" v-if="data.place.type == 0 && data.pictures != null && data.pictures.length > 0" title="菜单">
       <div class="place-detail-inline-col" v-for="pic in data.pictures" :key="pic.id">
         <img class="place-detail-menu-img" :src="pic.img"/>
+        <div class="place-detail-menu-title">{{pic.title}}</div>
       </div>
     </van-cell-group>
     <van-cell-group class="place-detail-inline-row" v-if="data.articles != null && data.articles.length > 0" title="他们都在说~">
@@ -224,6 +225,13 @@
   }
   .place-detail-menu-img {
     height: 100px;
+  }
+  .place-detail-menu-title {
+    position: absolute;
+    bottom: 24px;
+    padding-left: 2px;
+    color: white;
+    font-size: 12px;
   }
   .place-detail-article-img {
     width: 150px;

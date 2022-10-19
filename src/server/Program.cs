@@ -1,6 +1,8 @@
 using Npgsql;
 using Serilog;
 using Serilog.Events;
+using SqlKata.Compilers;
+using SqlKata.Execution;
 using System.Data;
 using V.TouristGuide.Server.Daos;
 using V.TouristGuide.Server.Helpers;
@@ -24,10 +26,18 @@ builder.Host.UseSerilog((context, config) =>
 // Add services to the container.
 builder.Services.AddTransient<IDbConnection>(_ =>
 {
-    var cs = builder.Configuration["Postgres:ConnectionString"];
-    var conn = new NpgsqlConnection(cs);
+    var conn = new NpgsqlConnection(builder.Configuration["Postgres:ConnectionString"]);
     conn.Open();
     return conn;
+});
+builder.Services.AddTransient(_ =>
+{
+    var db = new QueryFactory(new NpgsqlConnection(builder.Configuration["Postgres:ConnectionString"]), new PostgresCompiler());
+    db.Logger = sql =>
+    {
+        Log.Information(sql.Sql);
+    };
+    return db;
 });
 builder.Services.AddTransient<PlaceDao>()
     .AddTransient<PlaceService>()

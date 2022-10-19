@@ -27,7 +27,7 @@ namespace V.TouristGuide.Server.Controllers
         [HttpPost("file/upload")]
         [JwtValidation]
         [AdminRole]
-        public async Task<object> UploadFile([FromServices] IWebHostEnvironment env)
+        public async Task<object> UploadFile([FromServices] IWebHostEnvironment env, [FromServices] IConfiguration config)
         {
             var file = this.Request.Form.Files?.FirstOrDefault();
             if (file == null)
@@ -46,7 +46,7 @@ namespace V.TouristGuide.Server.Controllers
             {
                 await fileStream.CopyToAsync(stream);
             }
-            return new { status = 0, data = new { value = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/files/{file.FileName}" } };
+            return new { status = 0, data = new { value = $"{config["OAuth:BaseUrl"]}/files/{file.FileName}" } };
         }
     }
 }

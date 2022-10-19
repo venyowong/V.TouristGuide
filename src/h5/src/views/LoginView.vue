@@ -77,7 +77,6 @@
       </van-col>
     </van-row>
     <div class="login-oauths">
-      <img class="login-oauth-logo" src="../assets/qq.jpg" @click="oauth('qq')"/>
       <img class="login-oauth-logo" src="../assets/baidu.png" @click="oauth('baidu')"/>
       <img class="login-oauth-logo" src="../assets/github.png" @click="oauth('github')"/>
       <img class="login-oauth-logo" src="../assets/gitee.jpg" @click="oauth('gitee')"/>

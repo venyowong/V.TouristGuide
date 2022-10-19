@@ -55,7 +55,7 @@ function formatDistance(m) {
 const isProd = process.env.NODE_ENV === 'production';
 let baseUrl = "http://192.168.1.4:6941";
 if (isProd) {
-  baseUrl = "http://118.25.213.237/touristguide";
+  baseUrl = "https://vbranch.cn/touristguide";
 }
 
 export default {
