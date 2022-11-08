@@ -14,7 +14,7 @@
 
 ## 正式链接
 
-[域名还没通过备案，所以暂时用IP访问](http://118.25.213.237/tg/#/)
+[https://vbranch.cn/tg](https://vbranch.cn/tg)
 
 ## 鸣谢
 
