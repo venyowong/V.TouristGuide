@@ -23,6 +23,11 @@ builder.Host.UseSerilog((context, config) =>
          .Enrich.FromLogContext();
  });
 
+if (builder.Configuration["ReportMetrics"]?.ToLower() == "true")
+{
+    builder.Services.AddHostedService<MetricsHostService>();
+}
+
 // Add services to the container.
 builder.Services.AddTransient<IDbConnection>(_ =>
 {
