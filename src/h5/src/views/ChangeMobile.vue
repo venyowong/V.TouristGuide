@@ -102,6 +102,17 @@
       }
     },
     created() {
+      if (common.addPageView) {
+        let user = localStorage.user;
+        if (user) {
+          user = JSON.parse(user);
+          fetch(`https://vbranch.cn/talog/metric/pg/add?index=tg&page=changeMobile&user=${user.id}`);
+        }
+        else {
+          fetch('https://vbranch.cn/talog/metric/pg/add?index=tg&page=changeMobile');
+        }
+      }
+
       this.mode = this.$route.query.mode;
       this.token = localStorage.getItem("token.user");
       if (!this.token) {

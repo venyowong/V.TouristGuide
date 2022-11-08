@@ -28,7 +28,7 @@
   import 'vant/lib/index.css';
 
   const app = createApp();
-  // const isProd = process.env.NODE_ENV === 'production'
+  const isProd = process.env.NODE_ENV === 'production'
 
   // 3. 注册你需要的组件
   app.use(Button);
@@ -46,10 +46,10 @@
   app.use(Tab);
   app.use(Tabs);
   app.use(Dialog);
-  const vConsole = new vconsole();
-  app.use(vConsole);
-  // if (!isProd) {
-  // }
+  if (!isProd) {
+    const vConsole = new vconsole();
+    app.use(vConsole);
+  }
 
   export default {
     data() {

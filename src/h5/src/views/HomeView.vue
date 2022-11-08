@@ -100,6 +100,17 @@
       else {
         localStorage.setItem("token.user", this.token);
       }
+
+      if (common.addPageView) {
+        let user = localStorage.user;
+        if (user) {
+          user = JSON.parse(user);
+          fetch(`https://vbranch.cn/talog/metric/pg/add?index=tg&page=home&user=${user.id}`);
+        }
+        else {
+          fetch('https://vbranch.cn/talog/metric/pg/add?index=tg&page=home');
+        }
+      }
     }
   }
 </script>

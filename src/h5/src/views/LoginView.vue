@@ -241,6 +241,11 @@
       oauth(source) {
         location.href = `${common.baseUrl}/usermodule/oauth?service=${source}`;
       }
+    },
+    created() {
+      if (common.addPageView) {
+        fetch('https://vbranch.cn/talog/metric/pg/add?index=tg&page=login');
+      }
     }
   }
 </script>

@@ -83,6 +83,17 @@
     },
     components: { EditableCell },
     created() {
+      if (common.addPageView) {
+        let user = localStorage.user;
+        if (user) {
+          user = JSON.parse(user);
+          fetch(`https://vbranch.cn/talog/metric/pg/add?index=tg&page=setting&user=${user.id}`);
+        }
+        else {
+          fetch('https://vbranch.cn/talog/metric/pg/add?index=tg&page=setting');
+        }
+      }
+
       this.token = localStorage.getItem("token.user");
       if (!this.token) {
         this.$router.push({

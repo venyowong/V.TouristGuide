@@ -104,6 +104,17 @@
       };
     },
     created() {
+      if (common.addPageView) {
+        let user = localStorage.user;
+        if (user) {
+          user = JSON.parse(user);
+          fetch(`https://vbranch.cn/talog/metric/pg/add?index=tg&page=placeDetail&user=${user.id}`);
+        }
+        else {
+          fetch('https://vbranch.cn/talog/metric/pg/add?index=tg&page=placeDetail');
+        }
+      }
+
       let json = localStorage.getItem('location');
       let l = JSON.parse(json);
       this.lng = l.lng;

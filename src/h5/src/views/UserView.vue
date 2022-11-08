@@ -70,6 +70,17 @@ import { Dialog, Toast } from 'vant';
       };
     },
     created() {
+      if (common.addPageView) {
+        let user = localStorage.user;
+        if (user) {
+          user = JSON.parse(user);
+          fetch(`https://vbranch.cn/talog/metric/pg/add?index=tg&page=user&user=${user.id}`);
+        }
+        else {
+          fetch('https://vbranch.cn/talog/metric/pg/add?index=tg&page=user');
+        }
+      }
+
       this.token = this.$route.query.token;
       if (!this.token) {
         this.token = localStorage.getItem("token.user");

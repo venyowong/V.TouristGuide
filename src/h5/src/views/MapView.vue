@@ -104,6 +104,17 @@
       }
     },
     mounted() {
+      if (common.addPageView) {
+        let user = localStorage.user;
+        if (user) {
+          user = JSON.parse(user);
+          fetch(`https://vbranch.cn/talog/metric/pg/add?index=tg&page=map&user=${user.id}`);
+        }
+        else {
+          fetch('https://vbranch.cn/talog/metric/pg/add?index=tg&page=map');
+        }
+      }
+
       let map = new window.BMapGL.Map("map");          // 创建地图实例 
       let location = JSON.parse(localStorage.getItem('location'));
       this.lat = location.lat;

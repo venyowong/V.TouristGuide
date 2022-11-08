@@ -66,5 +66,6 @@ export default {
   addOverlay2: addOverlay2,
   getDistance: getDistance,
   toGaodeLatlng: toGaodeLatlng,
-  formatDistance: formatDistance
+  formatDistance: formatDistance,
+  addPageView: true
 }
