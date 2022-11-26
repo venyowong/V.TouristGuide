@@ -15,7 +15,8 @@
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="SqlKata.Execution" Version="2.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-    <PackageReference Include="V.User" Version="1.0.1" />
+    <PackageReference Include="V.Common.Extensions" Version="1.0.1" />
+    <PackageReference Include="V.User" Version="1.0.3" />
     <PackageReference Include="V.User.OAuth" Version="1.0.3" />
   </ItemGroup>
 

@@ -16,6 +16,11 @@
 
 [https://vbranch.cn/tg](https://vbranch.cn/tg)
 
+## 启动
+
+1. 初始化数据库，执行 [init_user_postgresql.sql](https://github.com/venyowong/V.ClassLibrary/blob/main/V.User/init_user_postgresql.sql)、[init.sql](https://github.com/venyowong/V.TouristGuide/blob/main/db/init.sql)
+2. 将 src/server/appsettings.txt、src/server/appsettings.Development.txt 后缀改为 json
+
 ## 鸣谢
 
 本项目后台管理页面使用百度低代码框架 [Amis](https://github.com/baidu/amis) 进行快速开发

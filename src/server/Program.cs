@@ -29,12 +29,6 @@ if (builder.Configuration["ReportMetrics"]?.ToLower() == "true")
 }
 
 // Add services to the container.
-builder.Services.AddTransient<IDbConnection>(_ =>
-{
-    var conn = new NpgsqlConnection(builder.Configuration["Postgres:ConnectionString"]);
-    conn.Open();
-    return conn;
-});
 builder.Services.AddTransient(_ =>
 {
     var db = new QueryFactory(new NpgsqlConnection(builder.Configuration["Postgres:ConnectionString"]), new PostgresCompiler());
